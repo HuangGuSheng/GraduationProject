@@ -5,4 +5,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="fab_item_help">校园求助帖</string>
+    <string name="fab_item_subject">学术交流帖</string>
+    <string name="fab_item_found">寻物启事帖</string>
 </resources>

@@ -36,7 +36,7 @@
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer" />
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/menu2"
+        android:id="@+id/fmenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -55,27 +55,27 @@
         fab:menu_colorRipple="#D99200">
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab12"
+            android:id="@+id/fab1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_camera"
-            fab:fab_label="Menu item 1"
+            fab:fab_label="@string/fab_item_help"
             style="@style/MenuButtonsStyle" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab22"
+            android:id="@+id/fab2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_manage"
-            fab:fab_label="Menu item 2"
+            fab:fab_label="@string/fab_item_subject"
             style="@style/MenuButtonsStyle" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab32"
+            android:id="@+id/fab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_share"
-            fab:fab_label="@string/lorem_ipsum"
+            fab:fab_label="@string/fab_item_found"
             style="@style/MenuButtonsStyle" />
 
     </com.github.clans.fab.FloatingActionMenu>

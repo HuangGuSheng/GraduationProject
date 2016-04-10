@@ -1,6 +1,8 @@
 package com.huanggusheng.graduationproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -11,19 +13,51 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.huanggusheng.graduationproject.PageFragment;
 import com.huanggusheng.graduationproject.R;
 import com.huanggusheng.graduationproject.SampleFragmentPagerAdapter;
 
+import java.io.BufferedReader;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static final int CAMPUS_HELP = 1;
+    public static final int SUBJECT_TRANS = 2;
+    public static final int LOST_FOUND = 3;
+
+    @Bind(R.id.fmenu) FloatingActionMenu fmenu;
+    @Bind(R.id.fab1) FloatingActionButton fab1;
+    @Bind(R.id.fab2) FloatingActionButton fab2;
+    @Bind(R.id.fab3) FloatingActionButton fab3;
+
+    /**
+     * FloatActionButton 响应
+     * 选择发帖种类
+     */
+    @OnClick({R.id.fab1,R.id.fab2,R.id.fab3}) void fabOnClick(FloatingActionButton button){
+        int touchId = button.getId();
+        if (touchId == fab1.getId()) {
+            createPost(CAMPUS_HELP);
+        } else if (touchId == fab2.getId()) {
+            createPost(SUBJECT_TRANS);
+        } else {
+            createPost(LOST_FOUND);
+        }
+        }
 
     private MaterialViewPager mViewPager;
     private DrawerLayout mDrawer;
@@ -33,7 +67,10 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+        ButterKnife.bind(this);
 
+        initView();
+        initDrawer();
         setTitle("");
 
         mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
@@ -133,8 +170,34 @@ public class MainActivity extends BaseActivity
                     Toast.makeText(getApplicationContext(), "Yes, the title is clickable", Toast.LENGTH_SHORT).show();
                 }
             });
+
+    }
+
+
+    /**
+     * 初始化基础view
+     */
+    private void initView() {
+    }
+
+
+    /**
+     * 初始化抽屉
+     */
+    private void initDrawer(){
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+
+    /**
+     * 创建帖子
+     * @param fabId
+     */
+    private void createPost(int fabId){
+        Intent pubNewPost = new Intent(MainActivity.this, PublishPostActivity.class);
+        pubNewPost.putExtra("post_type", fabId);
+        startActivity(pubNewPost);
     }
 
     @Override
