@@ -4,6 +4,8 @@ package com.huanggusheng.graduationproject.model;
  * Created by Huang on 2016/4/6.
  */
 
+import android.os.Parcelable;
+
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVRelation;
@@ -12,7 +14,7 @@ import java.util.List;
 
 @AVClassName("Post")
 public class Post extends AVObject{
-    public static final Creator CREATOR = AVObjectCreator.instance;
+    public static final Parcelable.Creator CREATOR = AVObjectCreator.instance;
 
     public static final String CONTENT = "content";
     public static final String AUTHOR = "author";
