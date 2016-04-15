@@ -41,7 +41,7 @@ public class Post extends AVObject{
     }
 
     public void setTitle(String title) {
-        put(CONTENT, title);
+        put(TITLE, title);
     }
 
     public String getContent() {
