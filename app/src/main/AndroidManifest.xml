@@ -16,9 +16,12 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme" >
+
+        <!--登录-->
         <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/app_name"
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +29,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.PublishPostActivity"></activity>
+
+        <!--注册-->
+        <activity
+            android:name=".activity.SignupActivity"
+            android:screenOrientation="portrait"
+            ></activity>
+
+        <!--主活动-->
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/app_name"
+            >
+        </activity>
+
+        <!--发帖-->
+        <activity
+            android:name=".activity.PublishPostActivity"
+            android:screenOrientation="portrait"
+            ></activity>
     </application>
 
 </manifest>

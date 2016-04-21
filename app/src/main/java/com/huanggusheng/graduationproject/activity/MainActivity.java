@@ -1,5 +1,6 @@
 package com.huanggusheng.graduationproject.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -59,10 +60,20 @@ public class MainActivity extends BaseActivity
         }
         }
 
-//    private MaterialViewPager mViewPager;
-//    private DrawerLayout mDrawer;
 //    private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar toolbar;
+
+
+    /**
+     * 启动MainACtivity
+     * @param context
+     */
+    public static void actionStart(Context context) {
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,10 +84,8 @@ public class MainActivity extends BaseActivity
         initDrawer();
         setTitle("");
 
-//        mViewPager = (MaterialViewPager) findViewById(R.id.materialViewPager);
 
         toolbar = mViewPager.getToolbar();
-//        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);

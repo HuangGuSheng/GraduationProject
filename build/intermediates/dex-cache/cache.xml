@@ -2,11 +2,53 @@
 <items version="2" >
 
     <item
+        jar="D:\AndroidProject\GraduationProject\app\build\intermediates\exploded-aar\cn.leancloud.android\avoscloud-search\v3.13.7\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="eadf6c1146e25f00144cad0c9820ea32a3221a27">
+        <dex dex="D:\AndroidProject\GraduationProject\app\build\intermediates\pre-dexed\debug\classes-169ea8108f79375e20fdd5be6940da7b67a5ed6d.jar" />
+    </item>
+    <item
+        jar="C:\Users\Huang\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\avoscloud-statistics\v3.13.7\2a58957104d69d36a556a57f687ebf9c23553735\avoscloud-statistics-v3.13.7.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2a58957104d69d36a556a57f687ebf9c23553735">
+        <dex dex="D:\AndroidProject\GraduationProject\app\build\intermediates\pre-dexed\debug\avoscloud-statistics-v3.13.7-f615a52c362b8a199dc239d6ceda35de89807442.jar" />
+    </item>
+    <item
+        jar="D:\AndroidProject\GraduationProject\app\build\intermediates\exploded-aar\cn.leancloud.android\avoscloud-sns\v3.13.7\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e036fa25a5fa13139739d99c1109892dc22a4ab5">
+        <dex dex="D:\AndroidProject\GraduationProject\app\build\intermediates\pre-dexed\debug\classes-b209e346f0950d344876ded2e9b918eab694e47f.jar" />
+    </item>
+    <item
+        jar="D:\AndroidProject\GraduationProject\app\build\intermediates\exploded-aar\cn.leancloud.android\avoscloud-feedback\v3.13.7\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="918ce81608fbc9adc1326e63b7ba79502aa9cbb4">
+        <dex dex="D:\AndroidProject\GraduationProject\app\build\intermediates\pre-dexed\debug\classes-e75d6a41f25ece9028abe5548120a993c53858b2.jar" />
+    </item>
+    <item
         jar="D:\AndroidProject\GraduationProject\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.3.0\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"
         sha1="ac6948cce36f694f3eb3d73a135e298dc4b3527a">
         <dex dex="D:\AndroidProject\GraduationProject\app\build\intermediates\pre-dexed\debug\classes-242e4ac453fbbdeeb6461e2a03cabc502cc11ba8.jar" />
+    </item>
+    <item
+        jar="D:\AndroidProject\GraduationProject\app\build\intermediates\exploded-aar\cn.leancloud.android\avoscloud-push\v3.13.7\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6dbe8fe69bba1524d10a558d472ffbf74ece09c6">
+        <dex dex="D:\AndroidProject\GraduationProject\app\build\intermediates\pre-dexed\debug\classes-8051b73c4de1f618232719d99a58206cd0a1d8e0.jar" />
+    </item>
+    <item
+        jar="C:\Users\Huang\.gradle\caches\modules-2\files-2.1\cn.leancloud.android\avoscloud-sdk\v3.13.7\7090cf8399a1c4a7cb275e026ae37c6178e2bdf\avoscloud-sdk-v3.13.7.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="07090cf8399a1c4a7cb275e026ae37c6178e2bdf">
+        <dex dex="D:\AndroidProject\GraduationProject\app\build\intermediates\pre-dexed\debug\avoscloud-sdk-v3.13.7-225ad82c5524d573c40d5bc01254bd741ab5c8c1.jar" />
     </item>
 
 </items>
