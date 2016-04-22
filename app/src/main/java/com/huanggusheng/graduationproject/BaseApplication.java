@@ -16,7 +16,6 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //子类化后 注册该类
-        AVObject.registerSubclass(User.class);
         AVObject.registerSubclass(Post.class);
         AVOSCloud.initialize(this,"uHn94GvFPFDziarycBFjqHmR-gzGzoHsz","ybyuMWlA8OVzod7rhgpbopFI");
     }

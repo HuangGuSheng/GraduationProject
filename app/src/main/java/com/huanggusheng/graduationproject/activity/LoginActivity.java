@@ -15,6 +15,7 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.LogInCallback;
 import com.huanggusheng.graduationproject.R;
+import com.huanggusheng.graduationproject.model.User;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -22,6 +23,11 @@ import butterknife.ButterKnife;
 public class LoginActivity extends BaseActivity {
     private static final String TAG = "LoginActivity";
     private static final int REQUEST_SIGNUP = 0;
+
+    /**
+     * 当前账户
+     */
+    private AVUser currentUser;
 
     @Bind(R.id.input_email)
     EditText _nameText;
@@ -36,8 +42,15 @@ public class LoginActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //检测是否有缓存账户
+        currentUser = User.getInstance(this);
+        if (currentUser != null) {
+            MainActivity.actionStart(this);
+            finish();
+        }
         ButterKnife.bind(this);
-        
+
         _loginButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -150,4 +163,5 @@ public class LoginActivity extends BaseActivity {
 
         return valid;
     }
+
 }
