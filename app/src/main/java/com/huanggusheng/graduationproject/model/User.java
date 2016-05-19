@@ -29,4 +29,5 @@ public class User extends AVUser {
         }
         return user;            // <<<<<<注意这里返回的是临时变量
     }
+
 }

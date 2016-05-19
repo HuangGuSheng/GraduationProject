@@ -1,6 +1,7 @@
 package com.huanggusheng.graduationproject.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Huang on 2016/4/12.
@@ -53,11 +55,39 @@ public class RecyclerViewFragment extends android.support.v4.app.Fragment {
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        //下滑刷新
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        });
+
         final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
+        //底部上滑加载更多
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //待完善
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //带完善
+            }
+        });
 //        getData();
+
+        //查询
         AVQuery<Post> post = new AVQuery<Post>("Post");
+        post.limit(10);
+        post.orderByDescending("createdAt");
         post.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> list, AVException e) {
@@ -76,5 +106,18 @@ public class RecyclerViewFragment extends android.support.v4.app.Fragment {
 //        while (PostQuery.IF_END == true) {
             mDataList = postQuery.getData();
 //        }
+    }
+
+    public void setmDataLists(final View  view) {
+        AVQuery<Post> post = new AVQuery<Post>("Post");
+        post.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> list, AVException e) {
+                mDataList = list;
+                mAdapter = new RecyclerViewMaterialAdapter(new PostListAdapter(view.getContext(),mDataList));
+                mRecyclerView.setAdapter(mAdapter);
+                MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
+            }
+        });
     }
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/logo_white"
-    android:layout_width="200dp"
+    android:layout_width="wrap_content"
     android:layout_height="@dimen/materialviewpager_logoHeight"
-    android:src="@drawable/logo_white" />
+    android:text="Graduation Project"
+    android:textSize="30sp"
+    android:textStyle="bold"
+    android:textColor="@android:color/white"/>

@@ -102,7 +102,7 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 PictureItemHolder pictureItemHolder = (PictureItemHolder) holder;
                 pictureItemHolder.title.setText(mDataList.get(position).getTitle());
                 pictureItemHolder.content.setText(mDataList.get(position).getContent());
-//                Log.e("URL",mDataList.get(position).getPicture().getUrl());
+//                Log.e("URL",mDataList.get(position).getPicture().toString());
                 //***************warn
 //                Log.e("URL", String.valueOf(mDataList.get(position).getPicture()));
 //                pictureItemHolder.imageView.setImageURI(Uri.parse(mDataList.get(position).getPicture().getUrl()));

@@ -1,6 +1,7 @@
 package com.huanggusheng.graduationproject.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -11,17 +12,24 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.alibaba.fastjson.serializer.CurrencyCodec;
+import com.avos.avoscloud.AVUser;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
-import com.huanggusheng.graduationproject.fragment.PageFragment;
 import com.huanggusheng.graduationproject.R;
 import com.huanggusheng.graduationproject.fragment.RecyclerViewFragment;
+import com.huanggusheng.graduationproject.model.User;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,6 +42,9 @@ public class MainActivity extends BaseActivity
     public static final int SUBJECT_TRANS = 2;
     public static final int LOST_FOUND = 3;
     private long exitTime = 0; ////记录第一次点击的时间
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    private AVUser currentUser;
 
     @Bind(R.id.fmenu) FloatingActionMenu fmenu;
     @Bind(R.id.fab1) FloatingActionButton fab1;
@@ -45,6 +56,8 @@ public class MainActivity extends BaseActivity
 
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawer;
+
+
     /**
      * FloatActionButton 响应
      * 选择发帖种类
@@ -80,6 +93,8 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        //获取缓存账户
+        currentUser = User.getCurrentUser();
         initView();
         initDrawer();
         setTitle("");
@@ -194,8 +209,18 @@ public class MainActivity extends BaseActivity
      * 初始化抽屉
      */
     private void initDrawer(){
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, 0, 0);
+        mDrawer.addDrawerListener(mDrawerToggle);
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View v = navigationView.getHeaderView(0);
+
+        ImageView img_nav_avatar = (ImageView) v.findViewById(R.id.nav_avatar);
+        TextView tv_nav_username = (TextView) v.findViewById(R.id.nav_username);
+        //获取用户名和头像
+        tv_nav_username.setText(currentUser.getUsername());
+
         ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 //        mDrawer.setDrawerListener(mDrawerToggle);
@@ -214,16 +239,20 @@ public class MainActivity extends BaseActivity
         startActivity(pubNewPost);
     }
 
+    /**
+     * 连续两次点击返回就退出程序
+     */
     @Override
     public void onBackPressed() {
 //        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Snackbar.make(fmenu, "再按一次退出程序", Snackbar.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
+                Log.e("Tag", currentUser.getUsername());
             }
             else {
                 finish();
@@ -243,27 +272,50 @@ public class MainActivity extends BaseActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) ||
+                super.onOptionsItemSelected(item);
+//        return super.onOptionsItemSelected(item);
     }
 
+
+    /**
+     * 侧滑菜单响应
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        if (id == R.id.nav_home) {
+            // 我的主页
+        } else if (id == R.id.nav_collect) {
+            // 收藏
+        } else if (id == R.id.nav_message) {
+            // 查看消息
+        }else if (id == R.id.nav_setting) {
+            // 设置
+        } else if (id == R.id.nav_about) {
+            // 关于
+        } else if (id == R.id.nav_out) {
+            //登出
+            new AlertDialog.Builder(MainActivity.this).setTitle("登出？")
+                    .setMessage("要退出当前账户吗୧(๑•̀⌄•́๑)૭✧")
+                    .setNegativeButton("否", new DialogInterface.OnClickListener() {
+                        @Override public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        @Override public void onClick(DialogInterface dialog, int which) {
+                            currentUser.logOut();
+                            LoginActivity.actionStart(MainActivity.this);
+                            finish();
+                        }
+                    })
+                    .show();
 
         }
 
@@ -272,11 +324,15 @@ public class MainActivity extends BaseActivity
         return true;
     }
 
-
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        return mDrawerToggle.onOptionsItemSelected(item) ||
 //                super.onOptionsItemSelected(item);
 //    }
-//
+
 }

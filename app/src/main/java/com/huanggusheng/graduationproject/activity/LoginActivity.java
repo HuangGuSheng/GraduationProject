@@ -1,6 +1,7 @@
 package com.huanggusheng.graduationproject.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -44,7 +45,8 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
 
         //检测是否有缓存账户
-        currentUser = User.getInstance(this);
+//        currentUser = User.getInstance(this);
+        currentUser = User.getCurrentUser();
         if (currentUser != null) {
             MainActivity.actionStart(this);
             finish();
@@ -70,9 +72,19 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 启动LoginActivity
+     * @param context
+     */
+    public static void actionStart(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
+
     public void login() {
         Log.d(TAG, "Login");
 
+        currentUser.logOut();
         if (!validate()) {
             onLoginFailed();
             return;

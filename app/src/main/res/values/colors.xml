@@ -15,4 +15,6 @@
     <color name="navigationBarColor">#000000</color>
 
     <color name="buttonColor">#388E3C</color>
+
+    <color name="nav_header" >#673ab7</color>
 </resources>
