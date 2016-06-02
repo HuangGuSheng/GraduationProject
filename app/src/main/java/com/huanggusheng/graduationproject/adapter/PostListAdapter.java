@@ -3,6 +3,7 @@ package com.huanggusheng.graduationproject.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.huanggusheng.graduationproject.R;
 import com.huanggusheng.graduationproject.activity.BaseActivity;
 import com.huanggusheng.graduationproject.model.Post;
@@ -34,6 +36,11 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private List<Post> mDataList;
     private Context mContext;
 
+    /**
+     * 构造方法
+     * @param context
+     * @param mDataList
+     */
     public PostListAdapter(Context context,List<Post> mDataList) {
         this.mContext = context;
         this.mDataList = mDataList;
@@ -55,10 +62,15 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      */
     @Override
     public int getItemViewType(int position) {
-
+        boolean isPictureItem;
         //这样写可能不妥，后期测试再做修改
-        boolean isPictureItem = (mDataList.get(position).getPicture() == null);
-        return isPictureItem ? PICTURE_ITEM : NO_PICTURE_ITEM;
+        if (mDataList.get(position).getImageUrl() == "") {
+            return 0;
+        } else {
+            return 1;
+        }
+
+
     }
 
 
@@ -70,16 +82,10 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      */
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
         if (viewType == NO_PICTURE_ITEM) {
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_no_picture, parent, false);
-//            return new RecyclerView.ViewHolder(view){};
             return new NoPictureItemHolder(mLayoutInflater.inflate(R.layout.item_no_picture, parent, false));
 
         } else {
-//            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_with_picture, parent, false);
-//            return new RecyclerView.ViewHolder(view) {
-//            };
             return new PictureItemHolder(mLayoutInflater.inflate(R.layout.item_with_picture, parent, false));
         }
     }
@@ -94,7 +100,6 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         switch (holder.getItemViewType()) {
             case NO_PICTURE_ITEM:
                 NoPictureItemHolder noPictureItemHolder = (NoPictureItemHolder) holder;
-//                noPictureItemHolder.avatar.setImageURI();
                 noPictureItemHolder.title.setText(mDataList.get(position).getTitle());
                 noPictureItemHolder.content.setText(mDataList.get(position).getContent());
                 break;
@@ -102,10 +107,8 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 PictureItemHolder pictureItemHolder = (PictureItemHolder) holder;
                 pictureItemHolder.title.setText(mDataList.get(position).getTitle());
                 pictureItemHolder.content.setText(mDataList.get(position).getContent());
-//                Log.e("URL",mDataList.get(position).getPicture().toString());
-                //***************warn
-//                Log.e("URL", String.valueOf(mDataList.get(position).getPicture()));
-//                pictureItemHolder.imageView.setImageURI(Uri.parse(mDataList.get(position).getPicture().getUrl()));
+                Uri uri = Uri.parse(mDataList.get(position).getImageUrl());
+                pictureItemHolder.draweeView.setImageURI(uri);
                 break;
         }
     }
@@ -158,7 +161,7 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView content;
 
         @Bind(R.id.card_picture)
-        ImageView imageView;
+        SimpleDraweeView draweeView;
 
         public PictureItemHolder(View itemView) {
             super(itemView);

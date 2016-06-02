@@ -49,6 +49,14 @@
             android:name=".activity.PublishPostActivity"
             android:screenOrientation="portrait"
             ></activity>
+
+        <!--关于-->
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AboutPage"
+            android:label="关于"
+        ></activity>
     </application>
 
 </manifest>

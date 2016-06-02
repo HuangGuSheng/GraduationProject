@@ -25,11 +25,10 @@
         app:viewpager_displayToolbarWhenSwipe="true"
         app:viewpager_transparentToolbar="false"
         app:viewpager_animatedHeaderImage="true"
-
         />
 
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/fmenu"
+        android:id="@+id/menu1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

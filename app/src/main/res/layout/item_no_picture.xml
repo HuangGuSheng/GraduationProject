@@ -64,7 +64,7 @@
                     android:layout_marginRight="16dp"
                     android:text="Title goes here"
                     android:textColor="@color/navigationBarColor"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
                     />
 
                 <TextView

@@ -21,4 +21,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!--关于-->
+    <string name="license">Copyrights © 2016 HuangGuSheng</string>
+    <string name="my_about_page">欢迎使用校园互助应用，希望每天都是好心情( •̀ .̫ •́ )✧  项目地址https://github.com/HuangGuSheng/GraduationProject</string>
+    <string name="version_name">1.0</string>
+    <string name="share_app">分享-校园互助系统</string>
+    <string name="app_html">https://github.com/HuangGuSheng/GraduationProject</string>
+    <string name="readme">https://github.com/HuangGuSheng/GraduationProject/blob/master/README.md</string>
+    <string name="mBolg">http://huanggusheng.github.io/</string>
+    <string name="alipay">13114392303</string>
 </resources>

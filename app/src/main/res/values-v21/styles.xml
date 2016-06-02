@@ -3,7 +3,6 @@
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
-
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:windowTranslucentStatus" tools:targetApi="21">true</item>
@@ -34,5 +33,9 @@
     <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@color/drawerArrowColor</item>
+    </style>
+
+    <style name="AboutPage" parent="AppTheme">
+        <item name="android:textColorPrimary">#212121</item>
     </style>
 </resources>

@@ -20,14 +20,19 @@ public class Post extends AVObject{
     public static final String TITLE = "title";
     public static final String CONTENT = "content";
     public static final String AUTHOR = "author";
-    public static final String LIKES = "likes";
-    public static final String REWARDS = "rewards"; // 打赏
-    public static final String PICTURE = "picture";
+    public static final String IMAGEURL = "URL";
+    public static final String IFHAVEPIC = "isPicItem";
+    public static final String POSTTYPE = "postType";
+
 
     public Post() {
 
     }
 
+    /**
+     * 发帖人
+     * @return
+     */
     public User getAuthor() {
         return getAVObject(AUTHOR);
     }
@@ -36,6 +41,10 @@ public class Post extends AVObject{
         put(AUTHOR, author);
     }
 
+    /**
+     * 帖子标题
+     * @return
+     */
     public String getTitle() {
         return getString(TITLE);
     }
@@ -44,6 +53,10 @@ public class Post extends AVObject{
         put(TITLE, title);
     }
 
+    /**
+     * 帖子内容
+     * @return
+     */
     public String getContent() {
         return getString(CONTENT);
     }
@@ -52,27 +65,45 @@ public class Post extends AVObject{
         put(CONTENT, content);
     }
 
-    public List<User> getLikes() {
-        return getList(LIKES);
+    /**
+     * 图片url
+     * @param url
+     */
+    public void setImageUrl(String url) {
+        if(url != null) {
+            put(IMAGEURL, url);
+        }
     }
 
-    public void setLikes(List<User> likes) {
-        put(LIKES, likes);
+    public String getImageUrl() {
+        String url = getString(IMAGEURL);
+        return url;
     }
 
-    public AVRelation<User> getRewardStudents() {
-        return getRelation(REWARDS);
+    /**
+     * 是否含有图片
+     * @param ifHavePic
+     */
+    public void setIfHavePic(boolean ifHavePic) {
+        put(IFHAVEPIC, ifHavePic);
     }
 
-    public void setRewardStudents(AVRelation<User> rewardStudents) {
-        put(REWARDS, rewardStudents);
+    public boolean getIfhavePic() {
+        boolean ifHavePic = getBoolean(IFHAVEPIC);
+        return ifHavePic;
     }
 
-    public AVFile getPicture() {
-        return getAVFile(PICTURE);
+    /**
+     * 帖子类型
+     * @param posttype
+     */
+    public void setPosttype(int posttype) {
+        put(POSTTYPE, posttype);
     }
 
-    public void setPicture(AVFile picture) {
-        put(PICTURE, picture);
+    public int getPostType() {
+        int postType = getInt(POSTTYPE);
+        return postType;
     }
+
 }

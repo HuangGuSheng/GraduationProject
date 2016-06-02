@@ -46,7 +46,9 @@ public class MainActivity extends BaseActivity
 
     private AVUser currentUser;
 
-    @Bind(R.id.fmenu) FloatingActionMenu fmenu;
+    private Toolbar toolbar;
+
+    @Bind(R.id.menu1) FloatingActionMenu fmenu;
     @Bind(R.id.fab1) FloatingActionButton fab1;
     @Bind(R.id.fab2) FloatingActionButton fab2;
     @Bind(R.id.fab3) FloatingActionButton fab3;
@@ -73,8 +75,6 @@ public class MainActivity extends BaseActivity
         }
         }
 
-//    private ActionBarDrawerToggle mDrawerToggle;
-    private Toolbar toolbar;
 
 
     /**
@@ -202,9 +202,15 @@ public class MainActivity extends BaseActivity
      * 初始化基础view
      */
     private void initView() {
+        fmenu.setClosedOnTouchOutside(true);
     }
 
+    /**
+     * FloatingActionButton设置
+     */
+    private void initFloatingActionButton() {
 
+    }
     /**
      * 初始化抽屉
      */
@@ -244,7 +250,6 @@ public class MainActivity extends BaseActivity
      */
     @Override
     public void onBackPressed() {
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (mDrawer.isDrawerOpen(GravityCompat.START)) {
             mDrawer.closeDrawer(GravityCompat.START);
         } else {
@@ -299,6 +304,7 @@ public class MainActivity extends BaseActivity
             // 设置
         } else if (id == R.id.nav_about) {
             // 关于
+            startActivity(new Intent(this, AboutActivity.class));
         } else if (id == R.id.nav_out) {
             //登出
             new AlertDialog.Builder(MainActivity.this).setTitle("登出？")
