@@ -68,10 +68,15 @@ public class PublishPostActivity extends BaseActivity {
 
     Bitmap bitmap ;
 
+    /**
+     * 帖子种类
+     */
+    int type ;
+
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        int type = intent.getIntExtra("type", 1);
+        type = intent.getIntExtra("type", 1);
 
         setContentView(R.layout.activity_pub_post);
 
@@ -141,10 +146,10 @@ public class PublishPostActivity extends BaseActivity {
     @OnClick(R.id.btn_commit_pub)
     void send() {
         String title = mPubTitle.getText().toString();
-        final String content = mPubContent.getText().toString();
+        String content = mPubContent.getText().toString();
         if (TextUtils.isEmpty(title) == false || bitmap != null) {
             final ProgressDialog dialog = PostUtil.showSpinnerDialog(this);
-            PostService.sendPost(title,content, bitmap, new SaveCallback() {
+            PostService.sendPost(title, content, haveImage, type, bitmap, new SaveCallback() {
                 @Override
                 public void done(AVException e) {
                     dialog.dismiss();

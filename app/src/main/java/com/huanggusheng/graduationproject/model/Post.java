@@ -11,10 +11,11 @@ import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.AVRelation;
 
+import java.io.Serializable;
 import java.util.List;
 
 @AVClassName("Post")
-public class Post extends AVObject{
+public class Post extends AVObject implements Serializable {
     public static final Parcelable.Creator CREATOR = AVObjectCreator.instance;
 
     public static final String TITLE = "title";

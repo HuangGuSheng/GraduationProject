@@ -5,11 +5,14 @@ import android.util.Log;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVFile;
+import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.SaveCallback;
 import com.huanggusheng.graduationproject.model.Post;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 /**
  * 发帖
@@ -21,7 +24,8 @@ public class PostService {
     public static final int FOLLOWING = 2;  //disable follow
     public static final int NONE_FOLLOW = 3; //can follow
 
-    public static void sendPost(final String title, final String content, Bitmap bitmap, final SaveCallback saveCallback) {
+    public static void sendPost(final String title, final String content, final boolean ifHavePic,
+                                final int postType, Bitmap bitmap, final SaveCallback saveCallback) {
         if (bitmap != null) {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
@@ -36,20 +40,22 @@ public class PostService {
                         saveCallback.done(e);
                     } else {
                         String url = file.getUrl();
-                        sendPost(title,content, url, saveCallback);
+                        sendPost(title, content, true, postType, url, saveCallback);
                     }
                 }
             });
         } else {
-            sendPost(title, content,"", saveCallback);
+            sendPost(title, content, false, postType, "", saveCallback);
         }
     }
 
-    public static void sendPost(final String title, final String content, final String url, final SaveCallback saveCallback) {
-//        final AVObject statusDetail = new AVObject(BaseApplication.STATUS_DETAIL);
+    public static void sendPost(final String title, final String content,final boolean ifHavePic,
+                                final int postType, final String url, final SaveCallback saveCallback) {
         Post post = new Post();
         post.setTitle(title);
         post.setContent(content);
+        post.setIfHavePic(ifHavePic);
+        post.setPosttype(postType);
         post.setImageUrl(url);
         post.saveInBackground(new SaveCallback() {
             @Override
@@ -63,5 +69,19 @@ public class PostService {
         });
     }
 
+    private static List<Post> data = null;
+    public static List<Post> queryPost(int type) {
 
+        //查询
+        AVQuery<Post> post = new AVQuery<Post>("Post");
+        post.limit(10);
+        post.orderByDescending("createdAt");
+        post.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> list, AVException e) {
+                data = list;
+            }
+        });
+        return data;
+    }
 }

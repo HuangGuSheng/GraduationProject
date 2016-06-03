@@ -1,5 +1,7 @@
 package com.huanggusheng.graduationproject.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
@@ -15,9 +18,11 @@ import com.avos.avoscloud.FindCallback;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 import com.huanggusheng.graduationproject.R;
+import com.huanggusheng.graduationproject.activity.PostDatilActivity;
 import com.huanggusheng.graduationproject.adapter.PostListAdapter;
 import com.huanggusheng.graduationproject.model.Post;
 import com.huanggusheng.graduationproject.util.PostQuery;
+import com.huanggusheng.graduationproject.util.PostService;
 
 import java.util.List;
 
@@ -80,7 +85,7 @@ public class RecyclerViewFragment extends android.support.v4.app.Fragment {
                 //带完善
             }
         });
-//        getData();
+
 
         //查询
         AVQuery<Post> post = new AVQuery<Post>("Post");
@@ -90,12 +95,39 @@ public class RecyclerViewFragment extends android.support.v4.app.Fragment {
             @Override
             public void done(List<Post> list, AVException e) {
                 mDataList = list;
-                mAdapter = new RecyclerViewMaterialAdapter(new PostListAdapter(view.getContext(),mDataList));
+                PostListAdapter postListAdapter = new PostListAdapter(view.getContext(), mDataList);
+                postListAdapter.setOnItemClickLitener(new PostListAdapter.OnItemClickLitener()
+                {
+
+                    @Override
+                    public void onItemClick(View view, int position)
+                    {
+                        goDetail(view.getContext(),mDataList.get(position - 1));
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position)
+                    {
+
+                    }
+                });
+                mAdapter = new RecyclerViewMaterialAdapter(postListAdapter);
                 mRecyclerView.setAdapter(mAdapter);
                 MaterialViewPagerHelper.registerRecyclerView(getActivity(), mRecyclerView, null);
 
+
             }
         });
+
+    }
+
+    public void goDetail(Context context, Post data) {
+        Intent intent = new Intent();
+        intent.setClass(context, PostDatilActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("post", data);
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 
     public void getData() {

@@ -1,8 +1,10 @@
 package com.huanggusheng.graduationproject.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.huanggusheng.graduationproject.R;
 import com.huanggusheng.graduationproject.activity.BaseActivity;
+import com.huanggusheng.graduationproject.activity.PostDatilActivity;
 import com.huanggusheng.graduationproject.model.Post;
 
 import org.w3c.dom.Text;
@@ -27,7 +30,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Huang on 2016/4/12.
  */
-public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private static final int NO_PICTURE_ITEM = 0;
     private static final int PICTURE_ITEM = 1;
@@ -62,9 +65,8 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      */
     @Override
     public int getItemViewType(int position) {
-        boolean isPictureItem;
         //这样写可能不妥，后期测试再做修改
-        if (mDataList.get(position).getImageUrl() == "") {
+        if (mDataList.get(position).getIfhavePic() == false) {
             return 0;
         } else {
             return 1;
@@ -96,17 +98,38 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      * @param position
      */
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = holder.getLayoutPosition();
+                mOnItemClickLitener.onItemClick(holder.itemView, pos);
+            }
+        });
         switch (holder.getItemViewType()) {
             case NO_PICTURE_ITEM:
                 NoPictureItemHolder noPictureItemHolder = (NoPictureItemHolder) holder;
+
                 noPictureItemHolder.title.setText(mDataList.get(position).getTitle());
-                noPictureItemHolder.content.setText(mDataList.get(position).getContent());
+
+                String content = mDataList.get(position).getContent();
+                if (content.length() > 40) {
+                    noPictureItemHolder.content.setText(content.substring(0, 38)+ "...");
+                } else {
+                    noPictureItemHolder.content.setText(content);
+                }
                 break;
             case PICTURE_ITEM:
                 PictureItemHolder pictureItemHolder = (PictureItemHolder) holder;
                 pictureItemHolder.title.setText(mDataList.get(position).getTitle());
-                pictureItemHolder.content.setText(mDataList.get(position).getContent());
+                String s = mDataList.get(position).getContent();
+                if (s.length() > 40) {
+                    pictureItemHolder.content.setText(s.substring(0, 38)+"...");
+
+                } else {
+                    pictureItemHolder.content.setText(s);
+
+                }
                 Uri uri = Uri.parse(mDataList.get(position).getImageUrl());
                 pictureItemHolder.draweeView.setImageURI(uri);
                 break;
@@ -132,15 +155,10 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @Bind(R.id.card_content_no_picture)
         TextView content;
 
-        public NoPictureItemHolder(View itemView) {
+        public NoPictureItemHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            itemView.findViewById(R.id.item_container_no_picture).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //进入帖子
-                }
-            });
+            itemView.findViewById(R.id.item_container_no_picture);
         }
     }
 
@@ -163,15 +181,25 @@ public class PostListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @Bind(R.id.card_picture)
         SimpleDraweeView draweeView;
 
-        public PictureItemHolder(View itemView) {
+        public PictureItemHolder(final View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            itemView.findViewById(R.id.container_picture).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //跳转帖子详情
-                }
-            });
+            itemView.findViewById(R.id.container_picture);
         }
     }
+
+    public interface OnItemClickLitener
+    {
+        void onItemClick(View view, int position);
+        void onItemLongClick(View view , int position);
+    }
+
+    private OnItemClickLitener mOnItemClickLitener;
+
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
+    {
+        this.mOnItemClickLitener = mOnItemClickLitener;
+    }
+
+
 }

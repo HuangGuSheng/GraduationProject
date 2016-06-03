@@ -43,7 +43,7 @@
                     android:id="@+id/card_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GuSen"
+                    android:text="_谷森"
                     android:textColor="@color/accent_color"
                     android:textAppearance="?attr/textAppearanceListItem"
                     />

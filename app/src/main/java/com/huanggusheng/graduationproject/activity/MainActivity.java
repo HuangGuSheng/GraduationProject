@@ -41,6 +41,8 @@ public class MainActivity extends BaseActivity
     public static final int CAMPUS_HELP = 1;
     public static final int SUBJECT_TRANS = 2;
     public static final int LOST_FOUND = 3;
+    public static final int TALK = 4;
+
     private long exitTime = 0; ////记录第一次点击的时间
     private ActionBarDrawerToggle mDrawerToggle;
 
@@ -70,8 +72,10 @@ public class MainActivity extends BaseActivity
             createPost(CAMPUS_HELP);
         } else if (touchId == fab2.getId()) {
             createPost(SUBJECT_TRANS);
-        } else {
+        } else if (touchId == fab3.getId()) {
             createPost(LOST_FOUND);
+        } else {
+            createPost(TALK);
         }
         }
 
@@ -325,7 +329,6 @@ public class MainActivity extends BaseActivity
 
         }
 
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -335,10 +338,5 @@ public class MainActivity extends BaseActivity
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return mDrawerToggle.onOptionsItemSelected(item) ||
-//                super.onOptionsItemSelected(item);
-//    }
 
 }
